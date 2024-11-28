@@ -56,7 +56,7 @@ def test_change_region(driver, setup_logging):
     elem = sbis_contacts_page.get_region_in_list(41)
 
     log.info(f"Кликаем по ссылке")
-    time.sleep(3) # Можно заменить на ожидания явные для предотвращения использования time.sleep()
+    driver.implicitly_wait(3)
     elem.click()
 
     log.info(f"Получаем выбранный регион")
