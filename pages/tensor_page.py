@@ -19,6 +19,8 @@ class TensorPage(BasePage):
         """
         super().__init__(driver ,setup_logging)
         self.driver = driver
+        self.log = setup_logging
+
     def move_to_news(self):
         self.move_to(TensorLocators.BLOCK_NEWS, name="блок новостей")
 
@@ -37,7 +39,6 @@ class TensorPage(BasePage):
 
         :return: Веб-элемент ссылки с деталями.
         :raises TimeoutException: Если элемент не найден.
-        :raises IndexError: Если не найдено элементов с деталями.
         """
         block = self.get_block_sila_v_liudiah()
         container = block.find_element(By.XPATH, "./..")
@@ -45,6 +46,6 @@ class TensorPage(BasePage):
             details = WebDriverWait(container, timeout=10).until(lambda el: el.find_element(TensorLocators.DETAILS[0], TensorLocators.DETAILS[1]),message="Не найден элемент")
             return details
         except TimeoutException as e:
-            print(e.msg)
+            self.log.error(f'Не дождались появления ссылки Подробнее')
             raise
 
